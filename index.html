@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -387,7 +388,7 @@
     .pricing-perk .check { color: var(--red); font-weight: 700; }
 
     /* ─── ABOUT ─── */
-    #about { padding: 80px 0; }
+    #about { padding: 80px 0; background: var(--white); }
     .about-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -589,6 +590,61 @@
     footer .footer-nav a { color: rgba(255,255,255,0.5); transition: color 0.2s; }
     footer .footer-nav a:hover { color: var(--red); }
 
+    /* ─── WHY CHOOSE ─── */
+    .why-choose { padding: 80px 0; background: var(--gray-light); }
+    .why-choose-header { text-align: center; margin-bottom: 48px; }
+    .why-choose-intro { color: var(--gray-text); max-width: 580px; margin: 12px auto 0; font-size: 1rem; line-height: 1.65; }
+    .why-choose-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+    .why-card {
+      background: var(--white);
+      border-radius: 12px;
+      padding: 40px 28px;
+      text-align: center;
+      border: 1px solid var(--gray-mid);
+      transition: all 0.22s;
+    }
+    .why-card:hover { box-shadow: 0 8px 28px rgba(208,47,47,0.12); transform: translateY(-3px); border-color: var(--red); }
+    .why-icon {
+      width: 88px; height: 88px;
+      background: var(--red); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 24px; color: var(--white);
+    }
+    .why-card h3 {
+      font-family: 'Oswald', sans-serif; font-size: 1.5rem; font-weight: 700;
+      text-transform: uppercase; color: var(--black); margin-bottom: 12px;
+    }
+    .why-card p { color: var(--gray-text); font-size: 0.92rem; line-height: 1.7; }
+
+    /* ─── SERVICE AREA ─── */
+    #service-area { padding: 80px 0; background: var(--gray-light); }
+    .service-area-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 56px;
+      align-items: start;
+      margin-top: 40px;
+    }
+    .area-contact-row {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 24px; font-size: 1rem;
+    }
+    .area-contact-row svg { color: var(--red); flex-shrink: 0; }
+    .area-contact-row a { color: var(--red); font-weight: 700; font-family: 'Oswald', sans-serif; font-size: 1.15rem; }
+    .area-hours-table { width: 100%; border-collapse: collapse; margin-bottom: 32px; }
+    .area-hours-table td { padding: 8px 0; font-size: 0.9rem; color: var(--gray-text); border-bottom: 1px solid var(--gray-mid); }
+    .area-hours-table td:first-child { font-weight: 700; color: var(--black); width: 150px; }
+    .area-hours-table tr:last-child td { border-bottom: none; }
+    .cities-section-label {
+      font-family: 'Oswald', sans-serif; font-size: 1.5rem;
+      font-weight: 700; text-transform: uppercase;
+      color: var(--black); margin-bottom: 14px;
+    }
+    .cities-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; }
+    .cities-grid span { font-size: 0.82rem; color: var(--gray-text); padding: 4px 0; display: block; border-bottom: 1px solid var(--gray-mid); }
+    .area-map { border-radius: 10px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.12); }
+    .area-map iframe { width: 100%; height: 500px; border: none; display: block; }
+
     /* ─── STICKY MOBILE CTA ─── */
     .mobile-cta-bar {
       display: none;
@@ -635,6 +691,10 @@
       .process-pricing-grid,
       .services-grid,
       .reviews-grid { grid-template-columns: 1fr; }
+      .why-choose-grid { grid-template-columns: 1fr; gap: 20px; }
+      .service-area-grid { grid-template-columns: 1fr; }
+      .area-map iframe { height: 320px; }
+      .cities-grid { grid-template-columns: repeat(2, 1fr); }
       .about-grid { grid-template-columns: 1fr; }
       .about-img-box { height: 280px; }
       .stats-grid { grid-template-columns: repeat(2, 1fr); }
@@ -871,6 +931,50 @@
   </div>
 </section>
 
+<!-- WHY CHOOSE MOCO JUNK BROS -->
+<section class="why-choose">
+  <div class="container">
+    <div class="why-choose-header">
+      <div class="section-label">Responsible Disposal</div>
+      <h2 class="section-title">Why Choose MOCO Junk Bros?</h2>
+      <p class="why-choose-intro">We don't just haul it to the nearest dump — we sort through everything and handle it responsibly so you can feel good about where your junk goes.</p>
+    </div>
+    <div class="why-choose-grid">
+
+      <div class="why-card">
+        <div class="why-icon">
+          <svg width="44" height="44" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </div>
+        <h3>Donate</h3>
+        <p>Anything still usable — furniture, clothes, or household items — we bring to local charities and families in need. We donate everything that can be saved before anything else.</p>
+      </div>
+
+      <div class="why-card">
+        <div class="why-icon">
+          <svg width="44" height="44" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M6.99 11L3 15l3.99 4v-3H14v-2H6.99v-3zM21 9l-3.99-4v3H10v2h7.01v3L21 9z"/>
+          </svg>
+        </div>
+        <h3>Recycle</h3>
+        <p>We recycle as much of your waste as possible — metals, electronics, cardboard, and more. We do our part to keep Montgomery County green and out of the landfill.</p>
+      </div>
+
+      <div class="why-card">
+        <div class="why-icon">
+          <svg width="44" height="44" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+          </svg>
+        </div>
+        <h3>Landfill</h3>
+        <p>Whatever truly can't be salvaged ends up at the landfill — and nothing else. You can rest assured knowing your junk was disposed of the right way.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 <!-- GALLERY -->
 <section id="gallery">
   <div class="container">
@@ -888,6 +992,99 @@
       </div>
     </div>
     <p class="gallery-cta-note">Have a job for us? <strong>Text us photos at (301) 785-6750</strong> and get a same-day quote.</p>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews">
+  <div class="container">
+    <div class="section-label">What Customers Say</div>
+    <h2 class="section-title">5-Star Reviews from Your Neighbors</h2>
+    <p class="section-subtitle">Real feedback from real homeowners in Montgomery County.</p>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <p class="review-text">"Super fast, super affordable. I texted them a photo at 9am and they were done by noon. My garage looks brand new. Highly recommend these guys!"</p>
+        <div class="review-author">
+          <div class="author-avatar">SR</div>
+          <div>
+            <div class="author-name">Sarah R.</div>
+            <div class="author-loc">Rockville, MD</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <p class="review-text">"Used MOCO Junk Bros for a full basement cleanout. The price was fair, they showed up on time, and they were done faster than I expected. Great local business."</p>
+        <div class="review-author">
+          <div class="author-avatar">JM</div>
+          <div>
+            <div class="author-name">James M.</div>
+            <div class="author-loc">Gaithersburg, MD</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <p class="review-text">"These guys matched a competitor's price without me even asking twice. Professional, hardworking, and honest. Will definitely use them again for spring cleaning."</p>
+        <div class="review-author">
+          <div class="author-avatar">KP</div>
+          <div>
+            <div class="author-name">Karen P.</div>
+            <div class="author-loc">Germantown, MD</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICE AREA -->
+<section id="service-area">
+  <div class="container">
+    <div class="service-area-grid">
+
+      <div class="area-info">
+        <div class="section-label">Where We Operate</div>
+        <div class="cities-section-label">Serving the Montgomery County Area</div>
+        <div class="cities-grid">
+          <span>Aspen Hill</span>
+          <span>Bethesda</span>
+          <span>Brookeville</span>
+          <span>Burtonsville</span>
+          <span>Cabin John</span>
+          <span>Chevy Chase</span>
+          <span>Clarksburg</span>
+          <span>Colesville</span>
+          <span>Damascus</span>
+          <span>Derwood</span>
+          <span>Four Corners</span>
+          <span>Gaithersburg</span>
+          <span>Garrett Park</span>
+          <span>Germantown</span>
+          <span>Glen Echo</span>
+          <span>Kemp Mill</span>
+          <span>Kensington</span>
+          <span>Laytonsville</span>
+          <span>Montgomery Village</span>
+          <span>North Potomac</span>
+          <span>Olney</span>
+          <span>Poolesville</span>
+          <span>Potomac</span>
+          <span>Rockville</span>
+          <span>Sandy Spring</span>
+          <span>Silver Spring</span>
+          <span>Takoma Park</span>
+          <span>Wheaton</span>
+          <span>White Oak</span>
+        </div>
+      </div>
+
+      <div class="area-map">
+        <div id="service-map" style="height:500px; width:100%;"></div>
+      </div>
+
+    </div>
   </div>
 </section>
 
@@ -942,50 +1139,6 @@
   </div>
 </section>
 
-<!-- REVIEWS -->
-<section id="reviews">
-  <div class="container">
-    <div class="section-label">What Customers Say</div>
-    <h2 class="section-title">5-Star Reviews from Your Neighbors</h2>
-    <p class="section-subtitle">Real feedback from real homeowners in Montgomery County.</p>
-    <div class="reviews-grid">
-      <div class="review-card">
-        <div class="stars">★★★★★</div>
-        <p class="review-text">"Super fast, super affordable. I texted them a photo at 9am and they were done by noon. My garage looks brand new. Highly recommend these guys!"</p>
-        <div class="review-author">
-          <div class="author-avatar">SR</div>
-          <div>
-            <div class="author-name">Sarah R.</div>
-            <div class="author-loc">Rockville, MD</div>
-          </div>
-        </div>
-      </div>
-      <div class="review-card">
-        <div class="stars">★★★★★</div>
-        <p class="review-text">"Used MOCO Junk Bros for a full basement cleanout. The price was fair, they showed up on time, and they were done faster than I expected. Great local business."</p>
-        <div class="review-author">
-          <div class="author-avatar">JM</div>
-          <div>
-            <div class="author-name">James M.</div>
-            <div class="author-loc">Gaithersburg, MD</div>
-          </div>
-        </div>
-      </div>
-      <div class="review-card">
-        <div class="stars">★★★★★</div>
-        <p class="review-text">"These guys matched a competitor's price without me even asking twice. Professional, hardworking, and honest. Will definitely use them again for spring cleaning."</p>
-        <div class="review-author">
-          <div class="author-avatar">KP</div>
-          <div>
-            <div class="author-name">Karen P.</div>
-            <div class="author-loc">Germantown, MD</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- CONTACT -->
 <section id="contact">
   <div class="container">
@@ -1024,6 +1177,7 @@
       <a href="#pricing">Pricing</a>
       <a href="#about">About</a>
       <a href="#reviews">Reviews</a>
+      <a href="#service-area">Service Area</a>
       <a href="#contact">Contact</a>
     </div>
     <p><strong>MOCO Junk Bros</strong> &nbsp;|&nbsp; Serving Montgomery County, MD &nbsp;|&nbsp; <a href="tel:+13017856750" style="color:var(--red);">(301) 785-6750</a></p>
@@ -1048,6 +1202,23 @@
   nav.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', () => nav.classList.remove('open'));
   });
+</script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+  var serviceMap = L.map('service-map', { scrollWheelZoom: false }).setView([39.15, -77.25], 10);
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+    attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/attributions">CARTO</a>'
+  }).addTo(serviceMap);
+  fetch('https://nominatim.openstreetmap.org/search?q=Montgomery+County,+Maryland,+USA&polygon_geojson=1&format=json&limit=1')
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (data && data[0] && data[0].geojson) {
+        var layer = L.geoJSON(data[0].geojson, {
+          style: { color: '#D02F2F', fillColor: '#D02F2F', fillOpacity: 0.25, weight: 2.5 }
+        }).addTo(serviceMap);
+        serviceMap.fitBounds(layer.getBounds(), { padding: [20, 20] });
+      }
+    });
 </script>
 
 </body>
